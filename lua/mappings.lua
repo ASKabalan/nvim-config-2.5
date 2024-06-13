@@ -208,3 +208,13 @@ map("n", "<leader>/", function()
 end, { desc = "Toggle comment" })
 
 map("v", "<leader>/", "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { desc = "Toggle comment in visual mode" })
+
+
+-- Visual mode mappings
+map("v", "[", ":<C-u>normal! gv\"[i]<Esc>`[f]i[<Esc>`]a]<Esc>", { desc = "Surround selection with [" })
+map("v", "\"", ":<C-u>normal! gv\"[i\"<Esc>`[f]i\"<Esc>`]a\"<Esc>", { desc = "Surround selection with \"" })
+map("v", "'", ":<C-u>normal! gv\"[i'<Esc>`[f]i'<Esc>`]a'<Esc>", { desc = "Surround selection with '" })
+map("v", "*", ":<C-u>normal! gv\"[i*<Esc>`[f]i*<Esc>`]a*<Esc>", { desc = "Surround selection with *" })
+
+-- Remove mapping for leader p
+nomap("n", "<leader>p")
