@@ -1,3 +1,5 @@
+local overrides = require("configs.overrides")
+
 return {
   {
     "stevearc/conform.nvim",
