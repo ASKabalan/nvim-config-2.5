@@ -133,7 +133,8 @@ map("i", "<C-v>", "<C-R>+", { desc = "Paste in insert mode" })
 map("i", "<A-a>", "<Esc>V", { desc = "Select current line in Normal mode" })
 map("i", "<M-Up>", "<Plug>(copilot-suggest)", { desc = "Suggest completion" })
 map("i", "<M-Right>", "<Plug>(copilot-accept-line)", { desc = "Accept line suggestion" })
-map("i", "<M-Down>", 'copilot#Accept("\\<CR>")', { expr = true, replace_keycodes = false, desc = "Accept whole suggestion" })
+map("i", "<M-Down>", 'copilot#Accept("\\<CR>")',
+  { expr = true, replace_keycodes = false, desc = "Accept whole suggestion" })
 map("i", "<M-Left>", "<Plug>(copilot-dismiss)", { desc = "Dismiss suggestion" })
 map("i", "<M-3>", "<Plug>(copilot-next)", { desc = "Next suggestion" })
 map("i", "<M-1>", "<Plug>(copilot-previous)", { desc = "Previous suggestion" })
@@ -189,11 +190,14 @@ end, { desc = "Grep selection" })
 -- Telescope Mappings
 map("n", "<C-p>", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { desc = "Find all" })
 map("n", "<leader>p", "<cmd>lua require('telescope').extensions.projects.projects{}<CR>", { desc = "Find projects" })
-map("n", "<C-A-f>", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", { desc = "Live grep" })
+map("n", "<C-A-f>", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+  { desc = "Live grep" })
 map("n", "<A-p>", "<cmd>Telescope oldfiles<CR>", { desc = "Find oldfiles" })
-map("n", "<C-f>", "<cmd>lua require('searchbox').match_all({title='Search', clear_matches=false})<CR>", { desc = "Highlight selected word in Normal Mode" })
+map("n", "<C-f>", "<cmd>lua require('searchbox').match_all({title='Search', clear_matches=false})<CR>",
+  { desc = "Highlight selected word in Normal Mode" })
 map("n", "<C-h>", ":SearchBoxIncSearch<CR>", { desc = "Incremental search" })
-map("v", "<C-f>", "<cmd>lua require('searchbox').match_all({title='Search', clear_matches=false, visual_mode=true})<CR>", { desc = "Highlight selected word in Visual Mode" })
+map("v", "<C-f>", "<cmd>lua require('searchbox').match_all({title='Search', clear_matches=false, visual_mode=true})<CR>",
+  { desc = "Highlight selected word in Visual Mode" })
 map("v", "<C-h>", ":SearchBoxIncSearch visual_mode=true<CR>", { desc = "Incremental search in visual mode" })
 
 
@@ -207,7 +211,8 @@ map("n", "<leader>/", function()
   require("Comment.api").toggle.linewise.current()
 end, { desc = "Toggle comment" })
 
-map("v", "<leader>/", "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { desc = "Toggle comment in visual mode" })
+map("v", "<leader>/", "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+  { desc = "Toggle comment in visual mode" })
 
 
 -- Visual mode mappings
@@ -216,5 +221,6 @@ map("v", "\"", ":<C-u>normal! gv\"[i\"<Esc>`[f]i\"<Esc>`]a\"<Esc>", { desc = "Su
 map("v", "'", ":<C-u>normal! gv\"[i'<Esc>`[f]i'<Esc>`]a'<Esc>", { desc = "Surround selection with '" })
 map("v", "*", ":<C-u>normal! gv\"[i*<Esc>`[f]i*<Esc>`]a*<Esc>", { desc = "Surround selection with *" })
 
--- Remove mapping for leader p
+
+-- Remove unnecessary mappings
 nomap("n", "<leader>p")

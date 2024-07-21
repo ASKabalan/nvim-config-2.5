@@ -4,7 +4,7 @@ local capabilities = require("nvchad.configs.lspconfig").capabilities
 local lspconfig = require "lspconfig"
 
 -- Servers with default configuration
-local servers = { "html", "cssls", "tsserver","marksman","cmake"}
+local servers = { "html", "cssls", "tsserver","marksman","cmake" , "lua_ls"}
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -36,10 +36,10 @@ lspconfig.pylsp.setup {
           enabled = false,  -- Disable docstyle checking
         },
         autopep8 = {
-          enabled = true,  -- Enable auto-formatting with autopep8
+          enabled = false,  -- Enable auto-formatting with autopep8
         },
         yapf = {
-          enabled = false,  -- Disable formatting with yapf
+          enabled = true,  -- Disable formatting with yapf
         },
         flake8 = {
           enabled = false,  -- Disable linting with flake8

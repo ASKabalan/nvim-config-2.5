@@ -14,9 +14,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   callback = set_indentation
 })
 
-vim.g.VM_default_mappings         = 0
-vim.g.VM_use_first_cursor_in_line = 1
-vim.g.VM_maps                     = {
+vim.g.VM_default_mappings             = 0
+vim.g.VM_use_first_cursor_in_line     = 1
+vim.g.VM_maps                         = {
   ["Find Under"]         = "<C-d>",
   ["Find Subword Under"] = "<C-d>",
   ["Select Cursor Down"] = '<C-Down>',
@@ -26,4 +26,4 @@ vim.g.VM_maps                     = {
   ["Move Left"]          = '<M-S-Left>',
 }
 
-vim.g.copilot_no_tab_map = true
+vim.g.copilot_no_tab_map              = true
