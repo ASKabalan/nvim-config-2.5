@@ -31,6 +31,7 @@ M.mason = {
     "clang-format",
     "autopep8",
     "debugpy",
+    "yapf",
     "marksman",
     "cmakelint",
     "cpplint",

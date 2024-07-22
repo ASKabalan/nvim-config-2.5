@@ -21,7 +21,7 @@ lspconfig.pylsp.setup {
     pylsp = {
       plugins = {
         pycodestyle = {
-          enabled = false,  -- Disable code style checking
+          enabled = true,  -- Disable code style checking
         },
         pyflakes = {
           enabled = false,  -- Disable linting
