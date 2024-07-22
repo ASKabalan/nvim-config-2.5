@@ -122,3 +122,9 @@ WIP
 ## For Python
 
 ## For C++ and cuda
+
+## For Jupyter notebook
+
+Alot of solutions exists, all very difficult to put in place.
+
+I recommend using https://euporie.readthedocs.io instead
