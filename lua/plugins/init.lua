@@ -1,4 +1,4 @@
-local overrides = require("configs.overrides")
+local overrides = require "configs.overrides"
 
 return {
   {
@@ -9,9 +9,9 @@ return {
     end,
   },
   {
-    'numToStr/Comment.nvim',
+    "numToStr/Comment.nvim",
     config = function()
-      require('Comment').setup()
+      require("Comment").setup()
     end,
   },
   {
@@ -25,7 +25,7 @@ return {
   -- override plugin configs
   {
     "williamboman/mason.nvim",
-    opts = overrides.mason
+    opts = overrides.mason,
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -52,14 +52,14 @@ return {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     config = function()
-      require("telescope").load_extension("file_browser")
-    end
+      require("telescope").load_extension "file_browser"
+    end,
   },
   {
-    'nvim-telescope/telescope-ui-select.nvim',
+    "nvim-telescope/telescope-ui-select.nvim",
     config = function()
-      require("telescope").load_extension("ui-select")
-    end
+      require("telescope").load_extension "ui-select"
+    end,
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -72,66 +72,66 @@ return {
       },
     },
     config = function()
-      local telescope = require("telescope")
-      local lga_actions = require("telescope-live-grep-args.actions")
+      local telescope = require "telescope"
+      local lga_actions = require "telescope-live-grep-args.actions"
 
       telescope.setup {
         extensions = {
           live_grep_args = {
             auto_quoting = true, -- enable/disable auto-quoting
             -- define mappings, e.g.
-            mappings = {         -- extend mappings
+            mappings = { -- extend mappings
               i = {
                 ["<C-k>"] = lga_actions.quote_prompt(),
-                ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+                ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
               },
             },
             -- ... also accepts theme settings, for example:
             theme = "dropdown", -- use dropdown theme
             -- theme = { }, -- use own theme spec
             -- layout_config = { mirror=true }, -- mirror preview pane
-          }
-        }
+          },
+        },
       }
 
-      require("telescope").load_extension("live_grep_args")
-    end
+      require("telescope").load_extension "live_grep_args"
+    end,
   },
   {
-    'MunifTanjim/nui.nvim',
+    "MunifTanjim/nui.nvim",
   },
   {
-    'VonHeikemen/searchbox.nvim',
+    "VonHeikemen/searchbox.nvim",
     requires = {
-      { 'MunifTanjim/nui.nvim' }
+      { "MunifTanjim/nui.nvim" },
     },
     config = function()
-      require('searchbox').setup({
+      require("searchbox").setup {
         defaults = {
           reverse = false,
           exact = false,
-          prompt = ' ',
-          modifier = 'disabled',
-          confirm = 'off',
+          prompt = " ",
+          modifier = "disabled",
+          confirm = "off",
           clear_matches = true,
           show_matches = false,
         },
         popup = {
-          relative = 'win',
+          relative = "win",
           position = {
-            row = '5%',
-            col = '95%',
+            row = "5%",
+            col = "95%",
           },
           size = 30,
           border = {
-            style = 'rounded',
+            style = "rounded",
             text = {
-              top = ' Search ',
-              top_align = 'left',
+              top = " Search ",
+              top_align = "left",
             },
           },
           win_options = {
-            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder',
+            winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
           },
         },
         hooks = {
@@ -142,21 +142,21 @@ return {
             local opts = { buffer = input.bufnr }
 
             -- Go to the next match
-            vim.keymap.set('i', '<C-Right>', '<Plug>(searchbox-next-match)', opts)
+            vim.keymap.set("i", "<C-Right>", "<Plug>(searchbox-next-match)", opts)
             -- Go to the previous match
-            vim.keymap.set('i', '<C-Left>', '<Plug>(searchbox-prev-match)', opts)
+            vim.keymap.set("i", "<C-Left>", "<Plug>(searchbox-prev-match)", opts)
           end,
           on_done = function(value, search_type)
             -- code
-          end
-        }
-      })
-    end
+          end,
+        },
+      }
+    end,
   },
   {
     "mg979/vim-visual-multi",
     branch = "master",
-    lazy = false
+    lazy = false,
   },
   {
     "github/copilot.vim",
@@ -165,18 +165,18 @@ return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     opts = {
-      show_help = "yes",         -- Show help text for CopilotChatInPlace, default: yes
-      debug = false,             -- Enable or disable debug mode, the log file will be in ~/.local/state/nvim/CopilotChat.nvim.log
-      disable_extra_info = 'no', -- Disable extra information (e.g: system prompt) in the response.
+      show_help = "yes", -- Show help text for CopilotChatInPlace, default: yes
+      debug = false, -- Enable or disable debug mode, the log file will be in ~/.local/state/nvim/CopilotChat.nvim.log
+      disable_extra_info = "no", -- Disable extra information (e.g: system prompt) in the response.
       -- proxy = "socks5://127.0.0.1:3000", -- Proxies requests via https or socks.
     },
     build = function()
-      vim.notify("Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
+      vim.notify "Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim."
     end,
     event = "VeryLazy",
     keys = {
       { "<leader>cce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-      { "<leader>cct", "<cmd>CopilotChatTests<cr>",   desc = "CopilotChat - Generate tests" },
+      { "<leader>cct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
       {
         "<leader>ccv",
         ":CopilotChatVisual",
@@ -188,7 +188,7 @@ return {
         ":CopilotChatInPlace<cr>",
         mode = "x",
         desc = "CopilotChat - Run in-place code",
-      }
+      },
     },
     lazy = false,
   },
@@ -196,7 +196,7 @@ return {
     "sindrets/diffview.nvim",
   },
   {
-    'stevearc/aerial.nvim',
+    "stevearc/aerial.nvim",
     config = function()
       require "configs.aerial"
     end,
@@ -204,18 +204,18 @@ return {
   {
     "NeogitOrg/neogit",
     dependencies = {
-      "nvim-lua/plenary.nvim",         -- required
-      "sindrets/diffview.nvim",        -- optional - Diff integration
+      "nvim-lua/plenary.nvim", -- required
+      "sindrets/diffview.nvim", -- optional - Diff integration
       -- Only one of these is needed, not both.
       "nvim-telescope/telescope.nvim", -- optional
     },
-    config = true
+    config = true,
   },
   {
     "ahmedkhalf/project.nvim",
     config = function()
       require("project_nvim").setup()
-      require('telescope').load_extension("projects")
+      require("telescope").load_extension "projects"
     end,
   },
   {
@@ -241,17 +241,17 @@ return {
     config = function()
       require "configs.dapui"
     end,
-    requires = { "mfussenegger/nvim-dap" }
+    requires = { "mfussenegger/nvim-dap" },
   },
   {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-      require("nvim-surround").setup({
+      require("nvim-surround").setup {
         -- Configuration here, or leave empty to use defaults
-      })
-    end
+      }
+    end,
   },
   {
     "mechatroner/rainbow_csv",
@@ -261,9 +261,9 @@ return {
     lazy = false,
   },
   {
-    'fei6409/log-highlight.nvim',
+    "fei6409/log-highlight.nvim",
     config = function()
-      require('log-highlight').setup {}
+      require("log-highlight").setup {}
     end,
   },
   {
@@ -274,11 +274,16 @@ return {
     },
   },
   {
-    'edluffy/hologram.nvim',
+    "edluffy/hologram.nvim",
     config = function()
-      require('hologram').setup {
-        auto_display = true -- WIP automatic markdown image display, may be prone to breaking
+      require("hologram").setup {
+        auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
       }
     end,
+  },
+  {
+    "olimorris/persisted.nvim",
+    lazy = false, -- make sure the plugin is always loaded at startup
+    config = true,
   },
 }
