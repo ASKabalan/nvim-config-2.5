@@ -8,7 +8,12 @@ return {
       require "configs.conform"
     end,
   },
-
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end,
+  },
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -262,10 +267,18 @@ return {
     end,
   },
   {
-        "quarto-dev/quarto-nvim",
-        dependencies = {
-            "jmbuhr/otter.nvim",
-            "nvim-treesitter/nvim-treesitter",
+    "quarto-dev/quarto-nvim",
+    dependencies = {
+      "jmbuhr/otter.nvim",
+      "nvim-treesitter/nvim-treesitter",
     },
+  },
+  {
+    'edluffy/hologram.nvim',
+    config = function()
+      require('hologram').setup {
+        auto_display = true -- WIP automatic markdown image display, may be prone to breaking
+      }
+    end,
   },
 }

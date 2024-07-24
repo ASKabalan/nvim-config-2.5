@@ -99,9 +99,7 @@ map("n", "<C-a>", "ggVG", { desc = "Select all in normal mode" })
 map("n", "<A-a>", "V", { desc = "Select current line in Normal mode" })
 map("n", "<C-Z>", "u", { desc = "Undo" })
 map("n", "<C-Y>", "<C-R>", { desc = "Redo" })
-map("n", "<A-f>", function()
-  vim.lsp.buf.format { async = true }
-end, { desc = "LSP formatting" })
+map("n", "<A-f>", "<cmd>lua require('conform').format()<CR>", { desc = "Format" })
 map("n", "<F2>", "<cmd>lua TOGGLE_MOUSE()<CR>", { desc = "Toggle mouse support" })
 map("n", "<leader>o", "<cmd>lua TOGGLE_GIT_SYMBOLES()<CR>", { desc = "Symbols & git Outline" })
 map("n", "<leader>gs", "<cmd>lua TOGGLE_SYMBOLES()<CR>", { desc = "Symbols Outline" })
@@ -151,12 +149,15 @@ map("v", "<C-A-Up>", ":'<,'>y<CR>:'<-1pu<CR>gv=gv", { desc = "Copy text up" })
 map("v", "<C-A-Down>", ":'<,'>y<CR>:pu!<CR>gv=gv", { desc = "Copy text down" })
 map("v", "<C-S>", "<cmd>w<CR>", { desc = "Save" })
 map("v", "<C-v>", '"_d"+P', { desc = "Paste from clipboard" })
+map("v","<C-c>", '"+y', { desc = "Copy to clipboard" })
 map("v", "<BS>", 'h""x', { desc = "Delete back character in visual mode" })
 map("v", "<Delete>", '""x', { desc = "Delete back character in Visual mode" })
 map("v", "<C-a>", "ggVG", { desc = "Select all in visual mode" })
 map("v", "<A-a>", "V", { desc = "Select current line in Visual mode" })
 map("v", "<C-z>", "u", { desc = "Undo" })
 map("v", "<C-y>", "<C-R>", { desc = "Redo" })
+
+-- the next two do not work
 map("v", "<C-S-f>", function()
   local text = Get_visual_selection()
   require('telescope.builtin').live_grep({
@@ -192,20 +193,15 @@ end, { desc = "Grep selection" })
 
 
 -- Telescope Mappings
-map("n", "<C-p>", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { desc = "Find all" })
+map("n", "<C-p>", "<cmd>lua require('telescope.builtin').find_files()<cr>", { desc = "Find all" })
 map("n", "<leader>p", "<cmd>lua require('telescope').extensions.projects.projects{}<CR>", { desc = "Find projects" })
 map("n", "<C-A-f>", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
   { desc = "Live grep" })
-map("n", "<A-p>", "<cmd>Telescope oldfiles<CR>", { desc = "Find oldfiles" })
-map("n", "<C-f>", "<cmd>lua require('searchbox').match_all({title='Search', clear_matches=false})<CR>",
-  { desc = "Highlight selected word in Normal Mode" })
-map("n", "<C-h>", ":SearchBoxIncSearch<CR>", { desc = "Incremental search" })
-map("v", "<C-f>", "<cmd>lua require('searchbox').match_all({title='Search', clear_matches=false, visual_mode=true})<CR>",
+map("n", "<C-f>", "<cmd>lua require('searchbox').match_all({title='Search'})<CR>", { desc = "Incremental search" })
+map("v", "<C-f>", "<Esc>:lua require('searchbox').incsearch({visual_mode=true})<CR>",
   { desc = "Highlight selected word in Visual Mode" })
-map("v", "<C-h>", ":SearchBoxIncSearch visual_mode=true<CR>", { desc = "Incremental search in visual mode" })
-
-
 -- NvimTree Mappings
+nomap("n", "<C-n>")
 map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle nvimtree" })
 map("v", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle nvimtree" })
 

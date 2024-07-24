@@ -1,6 +1,10 @@
 local options = {
   formatters_by_ft = {
     lua = { "stylua" },
+    python = { "yapf" },
+    c = { "clang-format" },
+    cpp = { "clang-format" },
+    cuda = { "clang-format" },
     -- css = { "prettier" },
     -- html = { "prettier" },
   },

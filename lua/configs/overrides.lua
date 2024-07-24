@@ -22,17 +22,18 @@ M.treesitter = {
 
 M.mason = {
   ensure_installed = {
+    -- markdown stuff
+    "marksman",
     -- lua stuff
     "lua-language-server",
     "stylua",
-    "python-lsp-server",
+    -- python stuff
+    "pyright",
+    "yapf",
     -- c/cpp stuff
     "clangd",
     "clang-format",
-    "autopep8",
     "debugpy",
-    "yapf",
-    "marksman",
     "cmakelint",
     "cpplint",
     "cmake-language-server",
