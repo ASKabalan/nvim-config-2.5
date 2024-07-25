@@ -181,9 +181,9 @@ conda activate myenv
 nvim
 ```
 
-By default it used `pyright` as the LSP server for Python. You can change it in the [lspconfig.lua](lua/configs/lspconfig.lua).
+By default it uses `pyright` as the LSP server for Python. You can change it in the [lspconfig.lua](../lua/configs/lspconfig.lua).
 
-Also `conform` uses `yapf` as the default formatter. You can change it in the [conform.lua](lua/configs/conform.lua) file.
+Also `conform` uses `yapf` as the default formatter. You can change it in the [conform.lua](../lua/configs/conform.lua) file.
 
 #### Using C++ / CUDA LSP
 
@@ -196,7 +196,7 @@ cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS
 ln -s build/compile_commands.json .
 ```
 
-By default it uses `clangd` as the LSP server and `clang-format` as the formatter. You can change it in the [lspconfig.lua](lua/configs/lspconfig.lua) and [conform.lua](lua/configs/conform.lua) files.
+By default it uses `clangd` as the LSP server and `clang-format` as the formatter. You can change it in the [lspconfig.lua](../lua/configs/lspconfig.lua) and [conform.lua](../lua/configs/conform.lua) files.
 ### Using Mason
 
 Mason is a package manager for Neovim that installs LSP servers, formatters, debuggers, etc. It is used to install the necessary tools for the IDE.
@@ -206,4 +206,4 @@ To see available packages: `:Mason`
 
 To install one or more packages: `:MasonInstall <package1> <package2> ...`
 
-for example if you want to use `Black` as the Python formatter, you first add it to [config.lua](lua/configs/conform.lua) then run `:MasonInstall black`
+for example if you want to use `Black` as the Python formatter, you first add it to [config.lua](../lua/configs/conform.lua) then run `:MasonInstall black`
