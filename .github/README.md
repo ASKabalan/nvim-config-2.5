@@ -92,7 +92,7 @@ One can consider [sshfs](https://github.com/libfuse/sshfs)), but with a weak con
 Plus, Vim makes you cooler. 😎
 
 ![@credit:Vim-memes](https://raw.githubusercontent.com/kuator/Vim-memes/master/they-dont-know.png)
-
+*@credit:Vim-memes*
 
 ---
 
