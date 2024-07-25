@@ -38,7 +38,6 @@ vim.schedule(function()
   require "mappings"
 end)
 
-
 -- Function to set indentation
 local function set_indentation()
   vim.opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for

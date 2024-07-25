@@ -4,7 +4,7 @@ local capabilities = require("nvchad.configs.lspconfig").capabilities
 local lspconfig = require "lspconfig"
 
 -- Servers with default configuration
-local servers = { "html", "cssls", "tsserver","marksman","cmake", "lua_ls" }
+local servers = { "html", "cssls", "tsserver", "marksman", "cmake", "lua_ls" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -29,8 +29,8 @@ lspconfig.clangd.setup {
       cmd = {
         "clangd",
         "--fallback-style=Google",
-        "--format-style={BasedOnStyle: Google, UseTab: Never, IndentWidth: 4, ColumnLimit: 0, BreakBeforeBraces: Allman, AllowShortIfStatementsOnASingleLine: false, AllowShortFunctionsOnASingleLine: None, AllowShortLoopsOnASingleLine: false}"
-      }
-    }
-  }
+        "--format-style={BasedOnStyle: Google, UseTab: Never, IndentWidth: 4, ColumnLimit: 0, BreakBeforeBraces: Allman, AllowShortIfStatementsOnASingleLine: false, AllowShortFunctionsOnASingleLine: None, AllowShortLoopsOnASingleLine: false}",
+      },
+    },
+  },
 }

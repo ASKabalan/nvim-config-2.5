@@ -37,7 +37,6 @@ M.mason = {
     "cmakelint",
     "cpplint",
     "cmake-language-server",
-
   },
 }
 
@@ -47,16 +46,16 @@ M.nvterm = {
     list = {},
     type_opts = {
       float = {
-        relative = 'editor',
+        relative = "editor",
         row = 0.3,
         col = 0.25,
         width = 0.5,
         height = 0.4,
         border = "single",
       },
-      horizontal = { location = "rightbelow", split_ratio = .15, },
-      vertical = { location = "rightbelow", split_ratio = .5 },
-    }
+      horizontal = { location = "rightbelow", split_ratio = 0.15 },
+      vertical = { location = "rightbelow", split_ratio = 0.5 },
+    },
   },
   behavior = {
     autoclose_on_quit = {
@@ -74,7 +73,7 @@ M.nvimtree = {
   respect_buf_cwd = true,
   update_focused_file = {
     enable = true,
-    update_root = true
+    update_root = true,
   },
   git = {
     enable = true,
