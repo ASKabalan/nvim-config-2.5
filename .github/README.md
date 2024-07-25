@@ -43,7 +43,7 @@ bash <(curl -s https://raw.githubusercontent.com/ASKabalan/nvim-config-2.5/main/
 
 #### After Installation
 
-After installation, you can open Neovim and run `:Lazy install` to install all the plugins. If you want to install the LSP servers, formatters, debuggers, etc., run `:MasonInstall`.
+After installation, you can open Neovim and run `:Lazy install` to install all the plugins. If you want to install the LSP servers, formatters, debuggers, etc., run `:MasonInstallAll`.
 
 It installs the tools to `$HOME/.local/tools` and NvChad and my custom config to `$HOME/.config/nvim`. Then all LSP servers, formatters, debuggers, etc., will be installed in `$HOME/.local/nvim/share`.
 
@@ -206,4 +206,4 @@ To see available packages: `:Mason`
 
 To install one or more packages: `:MasonInstall <package1> <package2> ...`
 
-for example if you want to use `Black` as the Python formatter, you first add it to [config.lua](../lua/configs/conform.lua) then run `:MasonInstall black`
+for example if you want to use `Black` as the Python formatter, you first add it to [conform.lua](../lua/configs/conform.lua) then run `:MasonInstall black`
