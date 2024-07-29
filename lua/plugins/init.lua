@@ -54,6 +54,7 @@ return {
     config = function()
       require("telescope").load_extension "file_browser"
     end,
+    lazy = false,
   },
   {
     "nvim-telescope/telescope-ui-select.nvim",
@@ -217,6 +218,7 @@ return {
       require("project_nvim").setup()
       require("telescope").load_extension "projects"
     end,
+    lazy = false,
   },
   {
     "dstein64/nvim-scrollview",

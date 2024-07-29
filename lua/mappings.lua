@@ -203,6 +203,12 @@ end, { desc = "Grep selection" })
 
 -- Telescope Mappings
 map("n", "<C-p>", "<cmd>lua require('telescope.builtin').find_files()<cr>", { desc = "Find all" })
+map(
+  "n",
+  "<C-A-p>",
+  "<cmd>lua require('telescope').extensions.file_browser.file_browser({hidden=true})<CR>",
+  { desc = "File Browser" }
+)
 map("n", "<leader>p", "<cmd>lua require('telescope').extensions.projects.projects{}<CR>", { desc = "Find projects" })
 map(
   "n",
