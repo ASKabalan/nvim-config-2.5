@@ -13,6 +13,17 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+lspconfig.lua_ls.setup {
+  -- ... other configs
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim" },
+      },
+    },
+  },
+}
+
 -- Pyright configuration
 lspconfig.pyright.setup {
   on_attach = on_attach,
