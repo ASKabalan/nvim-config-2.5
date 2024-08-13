@@ -21,4 +21,3 @@ require("neodev").setup {
   -- needs lua-language-server >= 3.6.0
   pathStrict = true,
 }
-

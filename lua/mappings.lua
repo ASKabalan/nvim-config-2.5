@@ -84,66 +84,65 @@ function Live_grep_current_buffers()
   }
 end
 
-
-
 -- Global variable to hold the image object
 local holo_image = nil
 
 -- Function to display the image from the current buffer's file path
 function Holo_disp()
-    local image_path = vim.fn.expand('%')
+  local image_path = vim.fn.expand "%"
 
-    if image_path and vim.fn.match(image_path, '\\v\\.png$') ~= -1 then
-        -- Get the current buffer
-        Holo_del()
-        local buf = vim.api.nvim_get_current_buf()
+  if image_path and vim.fn.match(image_path, "\\v\\.png$") ~= -1 then
+    -- Get the current buffer
+    Holo_del()
+    local buf = vim.api.nvim_get_current_buf()
 
-        -- Load the hologram image
-        holo_image = require('hologram.image'):new(image_path, {})
+    -- Load the hologram image
+    holo_image = require("hologram.image"):new(image_path, {})
 
-        -- Display the image at the center of the buffer
-        holo_image:display(1, 0, buf, {})
-    else
-        print("No valid PNG file detected")
-    end
+    -- Display the image at the center of the buffer
+    holo_image:display(1, 0, buf, {})
+  else
+    print "No valid PNG file detected"
+  end
 end
 
 -- Function to delete the image immediately
 function Holo_del()
-    if holo_image then
-        holo_image:delete(0, {free = true})
-        holo_image = nil
-    end
+  if holo_image then
+    holo_image:delete(0, { free = true })
+    holo_image = nil
+  end
 end
 
 -- Autocommands to trigger image display and deletion
-vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter", "BufAdd"}, {
-    pattern = {"*.png"},
-    callback = function()
-        Holo_disp()
-    end
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "BufAdd" }, {
+  pattern = { "*.png" },
+  callback = function()
+    Holo_disp()
+  end,
 })
 
-vim.api.nvim_create_autocmd({"BufLeave"}, {
-    pattern = {"*.png"},
-    callback = function()
-        Holo_del()
-    end
+vim.api.nvim_create_autocmd({ "BufLeave" }, {
+  pattern = { "*.png" },
+  callback = function()
+    Holo_del()
+  end,
 })
-
 
 -- Define a Lua function to execute the command
 local function open_frogmouth_terminal()
-    vim.cmd('vert terminal frogmouth %')
-    vim.cmd('wincmd p')
+  vim.cmd "vert terminal frogmouth %"
+  vim.cmd "wincmd p"
 end
 
 -- Create a Neovim command that calls the Lua function
 vim.api.nvim_create_user_command(
-    'FrogmouthPreview',
-    open_frogmouth_terminal,
-    { desc = "Open Frogmouth in a vertical terminal and switch back to previous window" }
+  "FrogmouthPreview",
+  open_frogmouth_terminal,
+  { desc = "Open Frogmouth in a vertical terminal and switch back to previous window" }
 )
+
+vim.api.nvim_create_user_command("Quarto", require("quarto").quartoPreview, { desc = "Preview Quarto" })
 -- Normal mode mappings
 map("n", ";", ":", { desc = "enter command mode", nowait = true })
 map("n", "<A-Up>", ":m .-2<CR>==", { desc = "Move line up" })
@@ -261,7 +260,7 @@ map("v", "<C-g>", function()
   }
 end, { desc = "Grep selection" })
 
--- NOT WORKING REGION 
+-- NOT WORKING REGION
 
 -- Telescope Mappings
 map("n", "<C-p>", "<cmd>lua require('telescope.builtin').find_files()<cr>", { desc = "Find all" })

@@ -16,4 +16,3 @@ require("aerial").setup {
     vim.keymap.set("n", "<C-1>", "<cmd>AerialNext<CR>", { buffer = bufnr })
   end,
 }
-
