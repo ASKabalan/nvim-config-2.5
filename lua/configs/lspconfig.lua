@@ -17,6 +17,14 @@ end
 lspconfig.pyright.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+  settings = {
+    python = {
+      analysis = {
+        diagnosticMode = "workspace",
+        typeCheckingMode = "standard",
+      },
+    },
+  },
 }
 
 -- Clangd configuration with custom formatting
