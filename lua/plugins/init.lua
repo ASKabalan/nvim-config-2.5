@@ -113,7 +113,7 @@ return {
           exact = false,
           prompt = " ",
           modifier = "disabled",
-          confirm = "off",
+          confirm = "menu",
           clear_matches = true,
           show_matches = false,
         },
@@ -154,6 +154,7 @@ return {
       }
     end,
   },
+  { "jbyuki/nabla.nvim", lazy = true },
   {
     "mg979/vim-visual-multi",
     branch = "master",

@@ -129,18 +129,22 @@ vim.api.nvim_create_autocmd({ "BufLeave" }, {
   end,
 })
 
--- Define a Lua function to execute the command
-local function open_frogmouth_terminal()
-  vim.cmd "vert terminal frogmouth %"
-  vim.cmd "wincmd p"
-end
-
 -- Create a Neovim command that calls the Lua function
-vim.api.nvim_create_user_command(
-  "FrogmouthPreview",
-  open_frogmouth_terminal,
-  { desc = "Open Frogmouth in a vertical terminal and switch back to previous window" }
-)
+vim.api.nvim_create_user_command("FrogmouthPreview", function()
+  vim.cmd "vert terminal frogmouth %" -- Open Frogmouth in a vertical terminal
+  vim.cmd "wincmd p" -- Switch back to the previous window
+end, { desc = "Open Frogmouth in a vertical terminal and switch back to previous window" })
+
+local nabla_activated = false
+vim.api.nvim_create_user_command("Nabla", function()
+  if nabla_activated then
+    require("nabla").disable_virt()
+    nabla_activated = false
+  else
+    require("nabla").enable_virt()
+    nabla_activated = true
+  end
+end, { desc = "Toggle Nabla" })
 
 vim.api.nvim_create_user_command("Quarto", require("quarto").quartoPreview, { desc = "Preview Quarto" })
 -- Normal mode mappings

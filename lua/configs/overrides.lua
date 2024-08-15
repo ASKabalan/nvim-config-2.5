@@ -12,6 +12,7 @@ M.treesitter = {
     "markdown_inline",
     "vimdoc",
   },
+
   indent = {
     enable = true,
     -- disable = {
@@ -37,6 +38,8 @@ M.mason = {
     "cmakelint",
     "cpplint",
     "cmake-language-server",
+    -- tree-sitter stuff
+    "tree-sitter-cli",
   },
 }
 
