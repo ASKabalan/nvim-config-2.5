@@ -21,7 +21,14 @@ return {
       require "configs.lspconfig"
     end, -- Override to setup mason-lspconfig
   },
-
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = "kevinhwang91/promise-async",
+    config = function()
+      require('ufo').setup()
+    end,
+    lazy = false, -- Ensure the plugin is loaded on startup
+  },
   -- override plugin configs
   {
     "williamboman/mason.nvim",

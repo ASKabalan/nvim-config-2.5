@@ -5,49 +5,11 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 local nomap = vim.keymap.del
 
--- Functions
-function TOGGLE_MOUSE()
-  if vim.o.mouse == "a" then
-    vim.o.mouse = ""
-    vim.cmd "NvimTreeClose"
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-  else
-    vim.o.mouse = "a"
-    vim.wo.number = true
-    vim.wo.relativenumber = false
-    vim.cmd "NvimTreeOpen"
-  end
-end
-function TOGGLE_GIT()
-  local neogit = require "neogit"
-  if neogit.status.started then
-    neogit.close()
-  else
-    neogit.open { kind = "split" }
-  end
-end
-
-function TOGGLE_SYMBOLES()
-  local aerial = require "aerial"
-  if aerial.is_open() then
-    aerial.close_all()
-  else
-    aerial.open_all()
-  end
-end
-
-function TOGGLE_GIT_SYMBOLES()
-  local aerial = require "aerial"
-  local neogit = require "neogit"
-  if aerial.is_open() then
-    aerial.close_all()
-    neogit.close()
-  else
-    aerial.open_all()
-    vim.cmd "wincmd l"
-    neogit.open { kind = "split" }
-  end
+function Get_visual_selection()
+  vim.cmd 'noau normal! "vy"'
+  local text = vim.fn.getreg "v"
+  text = text:gsub("\n", ""):gsub("[-[%]{}()*+?.,\\^$|#\\s]", "\\%&")
+  return text
 end
 
 function Highlight_selected_word()
@@ -57,96 +19,6 @@ function Highlight_selected_word()
   vim.cmd "set hlsearch"
   vim.cmd "normal! n"
 end
-
-function OpenSpectreWithQuickfix()
-  require("spectre").open_file_search { select_word = true }
-  vim.cmd "hor copen"
-end
-
-function Get_visual_selection()
-  vim.cmd 'noau normal! "vy"'
-  local text = vim.fn.getreg "v"
-  text = text:gsub("\n", ""):gsub("[-[%]{}()*+?.,\\^$|#\\s]", "\\%&")
-  return text
-end
-
-function Live_grep_current_buffers()
-  require("telescope.builtin").live_grep {
-    prompt_title = "Live Grep Current Buffers",
-    prompt_prefix = "Search: ",
-    preview_title = "Preview",
-    grep_open_files = true,
-    results_title = "Results",
-    layout_strategy = "vertical",
-    layout_config = {
-      preview_width = 0.5,
-    },
-  }
-end
-
--- Global variable to hold the image object
-local holo_image = nil
-
--- Function to display the image from the current buffer's file path
-function Holo_disp()
-  local image_path = vim.fn.expand "%"
-
-  if image_path and vim.fn.match(image_path, "\\v\\.png$") ~= -1 then
-    -- Get the current buffer
-    Holo_del()
-    local buf = vim.api.nvim_get_current_buf()
-
-    -- Load the hologram image
-    holo_image = require("hologram.image"):new(image_path, {})
-
-    -- Display the image at the center of the buffer
-    holo_image:display(1, 0, buf, {})
-  else
-    print "No valid PNG file detected"
-  end
-end
-
--- Function to delete the image immediately
-function Holo_del()
-  if holo_image then
-    holo_image:delete(0, { free = true })
-    holo_image = nil
-  end
-end
-
--- Autocommands to trigger image display and deletion
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "BufAdd" }, {
-  pattern = { "*.png" },
-  callback = function()
-    Holo_disp()
-  end,
-})
-
-vim.api.nvim_create_autocmd({ "BufLeave" }, {
-  pattern = { "*.png" },
-  callback = function()
-    Holo_del()
-  end,
-})
-
--- Create a Neovim command that calls the Lua function
-vim.api.nvim_create_user_command("FrogmouthPreview", function()
-  vim.cmd "vert terminal frogmouth %" -- Open Frogmouth in a vertical terminal
-  vim.cmd "wincmd p" -- Switch back to the previous window
-end, { desc = "Open Frogmouth in a vertical terminal and switch back to previous window" })
-
-local nabla_activated = false
-vim.api.nvim_create_user_command("Nabla", function()
-  if nabla_activated then
-    require("nabla").disable_virt()
-    nabla_activated = false
-  else
-    require("nabla").enable_virt()
-    nabla_activated = true
-  end
-end, { desc = "Toggle Nabla" })
-
-vim.api.nvim_create_user_command("Quarto", require("quarto").quartoPreview, { desc = "Preview Quarto" })
 -- Normal mode mappings
 map("n", ";", ":", { desc = "enter command mode", nowait = true })
 map("n", "<A-Up>", ":m .-2<CR>==", { desc = "Move line up" })
@@ -161,11 +33,13 @@ map("n", "<C-Z>", "u", { desc = "Undo" })
 map("n", "<C-Y>", "<C-R>", { desc = "Redo" })
 map("n", "<A-f>", "<cmd>lua require('conform').format()<CR>", { desc = "Format" })
 map("n", "<F2>", "<cmd>lua TOGGLE_MOUSE()<CR>", { desc = "Toggle mouse support" })
-map("n", "<leader>o", "<cmd>lua TOGGLE_GIT_SYMBOLES()<CR>", { desc = "Symbols & git Outline" })
-map("n", "<leader>gs", "<cmd>lua TOGGLE_SYMBOLES()<CR>", { desc = "Symbols Outline" })
-map("n", "<leader>gg", "<cmd>lua TOGGLE_GIT()<CR>", { desc = "Git Outline" })
 map("n", "<C-S-h>", "<cmd>lua require('spectre').toggle()<CR>", { desc = "Toggle Spectre" })
-map("n", "<C-A-h>", "<cmd>lua OpenSpectreWithQuickfix()<CR>", { desc = "Search on current file" })
+
+map("n", "<C-A-h>", function()
+  require("spectre").open_file_search { select_word = true }
+  vim.cmd "hor copen"
+end, { desc = "Open Spectre with quickfix" })
+
 map("n", "<S-F5>", "<cmd>lua require('dap').reverse_continue()<CR>", { desc = "Reverse !!" })
 map("n", "<F5>", "<cmd>lua require('dap').continue()<CR>", { desc = "Continue / Start" })
 map("n", "<F6>", "<cmd>lua require('dap').run_last()<CR>", { desc = "Run Last" })
