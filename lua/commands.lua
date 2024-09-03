@@ -28,49 +28,49 @@ end
 
 
 -- Function to delete the image immediately
-local holo_image = nil
-
-local function Holo_del()
-  if holo_image then
-    holo_image:delete(0, { free = true })
-    holo_image = nil
-  end
-end
-
--- Function to display the image from the current buffer's file path
-local function Holo_disp()
-  local image_path = vim.fn.expand "%"
-
-  if image_path and vim.fn.match(image_path, "\\v\\.png$") ~= -1 then
-    -- Get the current buffer
-    Holo_del()
-    local buf = vim.api.nvim_get_current_buf()
-
-    -- Load the hologram image
-    holo_image = require("hologram.image"):new(image_path, {})
-
-    -- Display the image at the center of the buffer
-    holo_image:display(1, 0, buf, {})
-  else
-    print "No valid PNG file detected"
-  end
-end
-
+-- local holo_image = nil
+--
+-- local function Holo_del()
+--   if holo_image then
+--     holo_image:delete(0, { free = true })
+--     holo_image = nil
+--   end
+-- end
+--
+-- -- Function to display the image from the current buffer's file path
+-- local function Holo_disp()
+--   local image_path = vim.fn.expand "%"
+--
+--   if image_path and vim.fn.match(image_path, "\\v\\.png$") ~= -1 then
+--     -- Get the current buffer
+--     Holo_del()
+--     local buf = vim.api.nvim_get_current_buf()
+--
+--     -- Load the hologram image
+--     holo_image = require("hologram.image"):new(image_path, {})
+--
+--     -- Display the image at the center of the buffer
+--     holo_image:display(1, 0, buf, {})
+--   else
+--     print "No valid PNG file detected"
+--   end
+-- end
+--
 -- Autocommands to trigger image display and deletion
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "BufAdd" }, {
-  pattern = { "*.png" },
-  callback = function()
-    Holo_disp()
-  end,
-})
-
-vim.api.nvim_create_autocmd({ "BufLeave" }, {
-  pattern = { "*.png" },
-  callback = function()
-    Holo_del()
-  end,
-})
-
+-- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "BufAdd" }, {
+--   pattern = { "*.png" },
+--   callback = function()
+--     Holo_disp()
+--   end,
+-- })
+--
+-- vim.api.nvim_create_autocmd({ "BufLeave" }, {
+--   pattern = { "*.png" },
+--   callback = function()
+--     Holo_del()
+--   end,
+-- })
+--
 -- Register each command
 vim.api.nvim_create_user_command("Mouse", TOGGLE_MOUSE, { desc = "Toggle mouse mode and related UI elements" })
 
