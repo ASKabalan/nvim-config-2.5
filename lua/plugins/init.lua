@@ -288,14 +288,14 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
   },
-  {
-    "edluffy/hologram.nvim",
-    config = function()
-      require("hologram").setup {
-        auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
-      }
-    end,
-  },
+  -- {
+  --   "edluffy/hologram.nvim",
+  --   config = function()
+  --     require("hologram").setup {
+  --       auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
+  --     }
+  --   end,
+  -- },
   {
     "lewis6991/gitsigns.nvim",
     config = function()
