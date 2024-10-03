@@ -8,7 +8,7 @@ capabilities.textDocument.foldingRange = {
 local lspconfig = require "lspconfig"
 
 -- Servers with default configuration
-local servers = { "html", "cssls", "tsserver", "marksman", "cmake", "lua_ls" }
+local servers = { "html", "cssls", "ts_ls", "marksman", "cmake", "lua_ls" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
