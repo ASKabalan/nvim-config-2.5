@@ -1,8 +1,7 @@
 #!/bin/bash
-
 # Default versions
-DEFAULT_NEOVIM_VERSION="0.11.5"
-DEFAULT_NODE_VERSION="v24.12.0"
+DEFAULT_NEOVIM_VERSION="0.12.3"
+DEFAULT_NODE_VERSION="v24.16.0"
 DEFAULT_RIPGREP_VERSION="15.1.0"
 
 # Default backup flag
@@ -67,14 +66,14 @@ echo "Installing Neovim..."
 echo "==================================="
 if ! command -v nvim &> /dev/null || [ "$FORCE_REDOWNLOAD" = true ]
 then
-  NVIM_DOWNLOAD_URL="https://github.com/neovim/neovim/releases/download/v0.10.0/nvim-linux64.tar.gz"
+  NVIM_DOWNLOAD_URL="https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/nvim-linux-x86_64.tar.gz"
   echo "Downloading Neovim from $NVIM_DOWNLOAD_URL..."
   wget $NVIM_DOWNLOAD_URL -P /tmp/nvim-code-download
   rm -rf ~/.local/tools/nvim
   mkdir -p ~/.local/tools/nvim
   echo "Extracting Neovim..."
-  tar -xzf /tmp/nvim-code-download/nvim-linux64.tar.gz --strip-components=1 -C ~/.local/tools/nvim
-  rm /tmp/nvim-code-download/nvim-linux64.tar.gz
+  tar -xzf /tmp/nvim-code-download/nvim-linux-x86_64.tar.gz --strip-components=1 -C ~/.local/tools/nvim
+  rm /tmp/nvim-code-download/nvim-linux-x86_64.tar.gz
   echo "# <<< Init nvim >>>" >> ~/.bashrc
   echo "export PATH=\$HOME/.local/tools/nvim/bin:\$PATH" >> ~/.bashrc
   export PATH=$HOME/.local/tools/nvim/bin:$PATH
