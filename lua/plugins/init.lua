@@ -285,7 +285,23 @@ return {
   {
     "opencode-ghost",
     dir = "~/.config/nvim/opencode-ghost",
-    build = "uv sync",
+    build = function()
+      local dir = vim.fn.expand "~/.config/nvim/opencode-ghost"
+      if vim.fn.isdirectory(dir) == 0 then
+        vim.fn.system {
+          "git",
+          "clone",
+          "--depth",
+          "1",
+          "https://github.com/muschneider/opencode-ghost.nvim",
+          dir,
+        }
+        if vim.v.shell_error ~= 0 then
+          vim.notify("opencode-ghost: git clone failed", vim.log.levels.ERROR)
+        end
+      end
+      vim.fn.system { "uv", "sync", "--project", dir }
+    end,
     event = "InsertEnter",
     config = function()
       require("opencode_ghost").setup {
