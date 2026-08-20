@@ -17,9 +17,9 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      require "nvchad.configs.lspconfig"
+      require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
-    end, -- Override to setup mason-lspconfig
+    end,
   },
   {
     "kevinhwang91/nvim-ufo",
@@ -168,40 +168,6 @@ return {
     lazy = false,
   },
   {
-    "github/copilot.vim",
-    lazy = false,
-  },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    opts = {
-      show_help = "yes", -- Show help text for CopilotChatInPlace, default: yes
-      debug = false, -- Enable or disable debug mode, the log file will be in ~/.local/state/nvim/CopilotChat.nvim.log
-      disable_extra_info = "no", -- Disable extra information (e.g: system prompt) in the response.
-      -- proxy = "socks5://127.0.0.1:3000", -- Proxies requests via https or socks.
-    },
-    build = function()
-      vim.notify "Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim."
-    end,
-    event = "VeryLazy",
-    keys = {
-      { "<leader>cce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-      { "<leader>cct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
-      {
-        "<leader>ccv",
-        ":CopilotChatVisual",
-        mode = "x",
-        desc = "CopilotChat - Open in vertical split",
-      },
-      {
-        "<leader>ccx",
-        ":CopilotChatInPlace<cr>",
-        mode = "x",
-        desc = "CopilotChat - Run in-place code",
-      },
-    },
-    lazy = false,
-  },
-  {
     "sindrets/diffview.nvim",
     config = function()
       require("diffview").setup {
@@ -239,6 +205,20 @@ return {
       require("scrollview").setup()
     end,
     lazy = false,
+  },
+  {
+    "benomahony/uv.nvim",
+    -- Optional filetype to lazy load when you open a python file
+    -- ft = { python }
+    -- Optional dependency, but recommended:
+    -- dependencies = {
+    --   "folke/snacks.nvim"
+    -- or
+    --   "nvim-telescope/telescope.nvim"
+    -- },
+    opts = {
+      picker_integration = true,
+    },
   },
   {
     "nvim-pack/nvim-spectre",
@@ -300,6 +280,23 @@ return {
     "lewis6991/gitsigns.nvim",
     config = function()
       require("gitsigns").setup()
+    end,
+  },
+  {
+    "opencode-ghost",
+    dir = "~/.config/nvim/opencode-ghost",
+    build = "uv sync",
+    event = "InsertEnter",
+    config = function()
+      require("opencode_ghost").setup {
+        keymaps = {
+          accept = "<M-Right>",
+          accept_word = "<M-S-Right>",
+          accept_line = "<M-Down>",
+          dismiss = "<M-Left>",
+          suggest = "<M-Up>",
+        },
+      }
     end,
   },
 }

@@ -65,8 +65,6 @@ vim.g.VM_maps = {
   ["Move Left"] = "<M-S-Left>",
 }
 
-vim.g.copilot_no_tab_map = true
-
 vim.g.syntastic_auto_jump = 0
 
 vim.o.foldcolumn = "1" -- '0' is not bad

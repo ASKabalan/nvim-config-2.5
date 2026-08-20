@@ -2,7 +2,7 @@
 
 ### Note: This is my new NvChad 2.5 compatible config
 
-This is my Neovim setup that I use mainly to write C++/CUDA and Python software. It includes a VSCode-like search textbox, a complete set of syntax highlighting, auto-complete and linters for C++/CUDA and Python using Clang and Python Language Server, git integration, symbol windows, etc. It also includes GitHub Copilot and the DAP extension that allows debugging Python and C++ code.
+This is my Neovim setup that I use mainly to write C++/CUDA and Python software. It includes a VSCode-like search textbox, a complete set of syntax highlighting, auto-complete and linters for C++/CUDA and Python using Clang and Pyright, git integration, symbol windows, etc. It also includes AI ghost-text autocompletion (via [opencode-ghost](https://github.com/muschneider/opencode-ghost.nvim), powered by your OpenCode Go subscription), `uv`-native Python tooling (via [uv.nvim](https://github.com/benomahony/uv.nvim)) and the DAP extension that allows debugging Python and C++ code.
 
 ### Main Usage
 
@@ -15,29 +15,30 @@ I highly recommend using [Kitty](https://sw.kovidgoyal.net/kitty) since it has a
 
 ### Installation
 
-This script installs (from scratch) all the necessary tools to run a Neovim (Neovim itself, Node.js for Copilot, and Ripgrep).
+This script installs (from scratch) all the necessary tools to run Neovim (Neovim itself and Ripgrep). Python is managed with [`uv`](https://github.com/astral-sh/uv), which the config also uses for LSP/formatting tooling (via Mason) and for AI ghost-text autocompletion.
 
 #### Before Installing
-Make sure that a Python environment is activated. It doesn't matter which version and what packages it has, as it will be used by the MasonInstaller extension to install LSP servers, formatters, debuggers, etc.
+
+1. Install [uv](https://docs.astral.sh/uv/) (needed by `uv.nvim` and `opencode-ghost`):
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+   or `pip install uv`.
+2. (Optional) Log in to opencode with your **OpenCode Go** subscription to enable AI ghost-text autocompletion. The key is auto-discovered from `~/.local/share/opencode/auth.json` — no environment variables needed.
 
 #### To Install
 
 ```bash
-# Activate some env
-conda activate some_venv
-# or using venv
-source some_venv/bin/activate
-
 # Then run the installer
 bash <(curl -s https://raw.githubusercontent.com/ASKabalan/nvim-config-2.5/main/setup.sh)
 ```
-You can specify which Node.js, Ripgrep, or Neovim version to use:
+You can specify which Ripgrep or Neovim version to use:
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/ASKabalan/nvim-config-2.5/main/setup.sh) -n 0.9.5 -v v20.11.1 -r 14.1.0 -b
+bash <(curl -s https://raw.githubusercontent.com/ASKabalan/nvim-config-2.5/main/setup.sh) -n 0.12.4 -r 15.2.0 -b
 ```
 or
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/ASKabalan/nvim-config-2.5/main/setup.sh) --neovim 0.9.5 --node v20.11.1 --ripgrep 14.1.0 --backup
+bash <(curl -s https://raw.githubusercontent.com/ASKabalan/nvim-config-2.5/main/setup.sh) --neovim 0.12.4 --ripgrep 15.2.0 --backup
 ```
 - `backup`: Backup previous Neovim and NvChad configs instead of overriding them.
 
@@ -45,7 +46,7 @@ bash <(curl -s https://raw.githubusercontent.com/ASKabalan/nvim-config-2.5/main/
 
 After installation, you can open Neovim and run `:Lazy install` to install all the plugins. If you want to install the LSP servers, formatters, debuggers, etc., run `:MasonInstallAll`.
 
-It installs the tools to `$HOME/.local/tools` and NvChad and my custom config to `$HOME/.config/nvim`. Then all LSP servers, formatters, debuggers, etc., will be installed in `$HOME/.local/nvim/share`.
+It installs the tools to `$HOME/.local/tools` and NvChad and my custom config to `$HOME/.config/nvim`. Then all LSP servers, formatters, debuggers, etc., will be installed in `$HOME/.local/nvim/share`. On first launch, `:Lazy install` pulls all plugins — including `opencode-ghost`, whose Python backend is set up automatically with `uv sync`.
 
 If you are limited in space in the `$HOME` folder (which is the case for some HPC servers), make a symbolic link (to opt or a folder with a lot of space):
 ```bash
@@ -57,7 +58,6 @@ ln -s /opt/.local $HOME/.config/nvim
 
 Just delete the installed tools and configs:
 ```bash
-rm -rf $HOME/.local/tools/node
 rm -rf $HOME/.local/tools/ripgrep
 rm -rf $HOME/.local/tools/nvim
 rm -rf $HOME/.local/nvim/share
@@ -67,8 +67,6 @@ And remove these lines from `.bashrc`:
 ```bash
 # <<< Init nvim >>>
 export PATH=$HOME/.local/tools/nvim/bin:$PATH
-# <<< Init node >>>
-export PATH=$HOME/.local/tools/node/bin:$PATH
 # <<< Init ripgrep >>>
 export PATH=$HOME/.local/tools/ripgrep:$PATH
 ```
@@ -157,26 +155,50 @@ in nvim lingo `leader` is `Space` and `meta` or `M` is `Alt`.
 | Unstage Hunk           | GUI                          | Ctrl+Alt+U                         | gitsign.nvim       |
 | Discard Hunk           | GUI                          | Ctrl+Alt+D                         | gitsign.nvim       |
 
-#### Copilot
+#### AI Autocomplete (opencode-ghost)
 
-| Action                  | VSCode       | My IDE                         |
-|-------------------------|--------------|--------------------------------|
-| Accept Line             | Tab          | Alt+Right                      |
-| Accept Block            | -            | Alt+Down                       |
-| Suggest                 | -            | Alt+Up                         |
-| Dismiss                 | -            | Alt+Left                       |
+Ghost-text suggestions (Copilot-style) powered by your OpenCode Go subscription. Backend starts automatically on insert; model falls back to `kimi-k2.6` / `glm-5.1` if the primary is unavailable. Diagnose with `:checkhealth opencode_ghost`.
+
+| Action         | My IDE              | Plugin / Function      |
+|----------------|---------------------|------------------------|
+| Accept all     | Alt+Right           | opencode-ghost         |
+| Accept line    | Alt+Down            | opencode-ghost         |
+| Accept word    | Alt+Shift+Right     | opencode-ghost         |
+| Request suggest| Alt+Up              | opencode-ghost         |
+| Dismiss        | Alt+Left            | opencode-ghost         |
 
 ---
 
 ### Using LSP Servers, Autocomplete, and Syntax Highlighting
 
 #### Using Python LSP
-Make sure the correct Python environment is activated before starting Neovim:
+
+Python is managed with [`uv`](https://github.com/astral-sh/uv), and [uv.nvim](https://github.com/benomahony/uv.nvim) gives you project init, venv auto-activation, package management and "run code from inside the editor" — all from Neovim. `uv.nvim` auto-activates the project's `.venv` on open, so `pyright` and the DAP pick up the right interpreter automatically.
+
 ```bash
 cd /path/to/myproject
-# Using venv
-source venv/bin/activate
-# or conda/micromamba
+uv init --python 3.12        # one-time project setup (creates pyproject.toml + .venv)
+uv add numpy pandas          # install deps
+nvim
+```
+
+Inside Neovim, `uv.nvim` provides (all under `<leader>x`, requires the picker integration):
+
+| Keymap           | Command               | Action                         |
+|------------------|-----------------------|--------------------------------|
+| `<leader>x`      | `:UV`                 | Show uv commands menu          |
+| `<leader>xr`     | `:UVRunFile`          | Run current file               |
+| `<leader>xs`     | `:UVRunSelection`     | Run selected code (visual)     |
+| `<leader>xf`     | `:UVRunFunction`      | Run a function from the file   |
+| `<leader>xe`     |                       | Environment management         |
+| `<leader>xi`     | `:UVInit`             | Initialize a uv project        |
+| `<leader>xa`     |                       | Add a package                  |
+| `<leader>xd`     |                       | Remove a package               |
+| `<leader>xc`     |                       | Sync packages                  |
+
+If you prefer conda/micromamba, activate the environment before starting Neovim:
+```bash
+cd /path/to/myproject
 conda activate myenv
 nvim
 ```

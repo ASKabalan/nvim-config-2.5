@@ -66,17 +66,6 @@ map("i", "<C-c>", '<C-O>"+y', { desc = "Copy in insert mode" })
 map("i", "<C-x>", '<C-O>"+x', { desc = "Cut in insert mode" })
 map("i", "<C-v>", "<C-R>+", { desc = "Paste in insert mode" })
 map("i", "<A-a>", "<Esc>V", { desc = "Select current line in Normal mode" })
-map("i", "<M-Up>", "<Plug>(copilot-suggest)", { desc = "Suggest completion" })
-map("i", "<M-Right>", "<Plug>(copilot-accept-line)", { desc = "Accept line suggestion" })
-map(
-  "i",
-  "<M-Down>",
-  'copilot#Accept("\\<CR>")',
-  { expr = true, replace_keycodes = false, desc = "Accept whole suggestion" }
-)
-map("i", "<M-Left>", "<Plug>(copilot-dismiss)", { desc = "Dismiss suggestion" })
-map("i", "<M-3>", "<Plug>(copilot-next)", { desc = "Next suggestion" })
-map("i", "<M-1>", "<Plug>(copilot-previous)", { desc = "Previous suggestion" })
 
 -- Visual mode mappings
 map("v", "<Tab>", ">gv", { desc = "indent" })

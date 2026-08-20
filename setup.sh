@@ -1,25 +1,20 @@
 #!/bin/bash
 # Default versions
-DEFAULT_NEOVIM_VERSION="0.12.3"
-DEFAULT_NODE_VERSION="v24.16.0"
-DEFAULT_RIPGREP_VERSION="15.1.0"
+DEFAULT_NEOVIM_VERSION="0.12.4"
+DEFAULT_RIPGREP_VERSION="15.2.0"
 
 # Default backup flag
 DEFAULT_BACKUP=false
 FORCE_REDOWNLOAD=false
 # Set defaults
 NEOVIM_VERSION=$DEFAULT_NEOVIM_VERSION
-NODE_VERSION=$DEFAULT_NODE_VERSION
 RIPGREP_VERSION=$DEFAULT_RIPGREP_VERSION
 BACKUP_FLAG=$DEFAULT_BACKUP
 
-while getopts ":n:v:r:b:f" opt; do
+while getopts ":n:r:b:f" opt; do
   case $opt in
     n)  
       NEOVIM_VERSION=$OPTARG
-      ;;
-    v)
-      NODE_VERSION=$OPTARG
       ;;
     r)
       RIPGREP_VERSION=$OPTARG
@@ -81,29 +76,6 @@ then
 else
   echo "Neovim is already installed."
   echo "it's path is $(which nvim)."
-fi
-
-# Install Node.js
-echo "==================================="
-echo "Installing Node.js..."
-echo "==================================="
-if ! command -v node &> /dev/null || [ "$FORCE_REDOWNLOAD" = true ]
-then
-  NODE_DOWNLOAD_URL="https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.xz"
-  echo "Downloading Node.js from $NODE_DOWNLOAD_URL..."
-  wget $NODE_DOWNLOAD_URL -P /tmp/nvim-code-download
-  rm -rf ~/.local/tools/node
-  mkdir -p ~/.local/tools/node
-  echo "Extracting Node.js..."
-  tar -xJf /tmp/nvim-code-download/node*.tar.xz --strip-components=1 -C ~/.local/tools/node
-  rm /tmp/nvim-code-download/node*.tar.xz
-  echo "# <<< Init node >>>" >> ~/.bashrc
-  echo "export PATH=\$HOME/.local/tools/node/bin:\$PATH" >> ~/.bashrc
-  export PATH=$HOME/.local/tools/node/bin:$PATH
-  echo "Node is installed at path ~/.local/tools/node/bin/."
-else
-  echo "Node is already installed."
-  echo "it's path is $(which node)."
 fi
 
 # Install ripgrep
